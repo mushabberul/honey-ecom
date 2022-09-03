@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-        <title>Honey | @yield('title')</title>
+        <title>Honey | @yield('admin_title')</title>
         <meta name="description" content="Ecommerce Dashboard" />
 
         @include('backend.layouts.inc.style')

@@ -13,3 +13,6 @@
 <script src="{{asset('assets/backend')}}/js/base/settings.js"></script>
 <script src="{{asset('assets/backend')}}/js/base/init.js"></script>
 <!-- Template Base Scripts End -->
+<!-- Page Specific Styles Start -->
+@stack('admin_script')
+<!-- Page Specific Styles end -->

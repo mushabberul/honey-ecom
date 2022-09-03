@@ -34,6 +34,10 @@
 <!-- Template Base Styles Start -->
 <link rel="stylesheet" href="{{asset('assets/backend')}}/css/styles.css" />
 <!-- Template Base Styles End -->
-
 <link rel="stylesheet" href="{{asset('assets/backend')}}/css/main.css" />
 <script src="{{asset('assets/backend')}}/js/base/loader.js"></script>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Page Specific Styles Start -->
+@stack('admin_style')
+<!-- Page Specific Styles end -->
