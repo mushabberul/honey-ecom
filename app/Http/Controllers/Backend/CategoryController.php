@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
 use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Brian2694\Toastr\Facades\Toastr;
+use App\Http\Requests\CategoryStoreRequest;
 
 class CategoryController extends Controller
 {
@@ -15,8 +18,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::latest('id')->select(['id','title','created_at'])->paginate();
-        return view('backend.pages.category.index',compact('categories'));
+        $categories = Category::latest('id')->select(['id', 'title', 'created_at'])->paginate();
+        return view('backend.pages.category.index', compact('categories'));
     }
 
     /**
@@ -26,7 +29,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.pages.category.create');
     }
 
     /**
@@ -35,9 +38,15 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryStoreRequest $request)
     {
-        //
+        Category::create([
+            'title' => $request->title,
+            'slug' => Str::slug($request->title)
+        ]);
+
+        Toastr::success('Category Created Successfully');
+        return redirect()->route('category.index');
     }
 
     /**

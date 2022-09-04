@@ -15,7 +15,7 @@
         <h2>Category List</h2>
         <div class="col-md-12 pb-3">
             <div class="d-flex justify-content-end">
-                <a href="" class="btn btn-primary">
+                <a href="{{route('category.create')}}" class="btn btn-primary">
                     <i class="fa fa-plus-circle"></i>
                     Add New Category
                 </a>

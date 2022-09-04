@@ -36,6 +36,9 @@
 <!-- Template Base Styles End -->
 <link rel="stylesheet" href="{{asset('assets/backend')}}/css/main.css" />
 <script src="{{asset('assets/backend')}}/js/base/loader.js"></script>
+<!--Toastr Start -->
+<link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+<!--Toastr End -->
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- Page Specific Styles Start -->
