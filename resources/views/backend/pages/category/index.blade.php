@@ -45,16 +45,20 @@
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a class="dropdown-item" href="#">
+                                            <a class="dropdown-item" href="{{route('category.edit',$category->slug)}}">
                                                 <i class="fa fa-edit"></i>
                                                 Edit
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">
-                                                <i class="fa fa-trash"></i>
-                                                Delete
-                                            </a>
+                                            <form action="{{route('category.destroy',$category->slug)}}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="dropdown-item show_confirm">
+                                                   <i class="fa fa-trash"></i>
+                                                    Delete
+                                                </button>
+                                            </form>
                                         </li>
                                     </ul>
                                 </div>
@@ -69,11 +73,39 @@
 @push('admin_script')
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.29/dist/sweetalert2.all.min.js"></script>
+
     <script>
         $(document).ready(function() {
             $('#dataTable').DataTable({
                 pagingType: 'first_last_numbers',
             });
         });
+
+        $('.show_confirm').click(function(event){
+            let form = $(this).closest('form')
+            event.preventDefault()
+
+            Swal.fire({
+              title: 'Are you sure?',
+              text: "You won't be able to revert this!",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                form.submit()
+                Swal.fire(
+                  'Deleted!',
+                  'Your file has been deleted.',
+                  'success'
+                )
+              }
+            })
+        });
+
+
     </script>
 @endpush

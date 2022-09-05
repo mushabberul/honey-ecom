@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 
-@section('title','Dashboard')
+@section('admin_title','Dashboard')
 
 @section('admin_content')
 <div class="row">

@@ -17,13 +17,14 @@
             <h2>Create Category</h2>
             <div class="card">
                 <div class="card-body">
-                    <form action="{{route('category.store')}}" method="POST">
+                    <form action="{{route('category.update',$category->slug)}}" method="POST">
                         @csrf
+                        @method('PUT')
                         <div class="mb-3">
-                            <label for="title" class="form-label">New Category</label>
-                            <input type="text" class="form-control @error('title')
+                            <label for="title" class="form-label">Update Category</label>
+                            <input type="text" value="{{$category->title}}" class="form-control @error('title')
                                 is-invalid
-                            @enderror" name="title" id="title" placeholder="Enter a Cateogory Name">
+                            @enderror" name="title" id="title">
                             @error('title')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{$message}}</strong>
@@ -33,7 +34,9 @@
                         <div class="mb-3">
                             <input type="checkbox" name="is_active" class="form-check-input @error('is_active')
                                 is-invalid
-                            @enderror" role="switch" id="is_active" checked>
+                                @enderror" role="switch" id="is_active" @if ($category->is_active)
+                                checked
+                            @endif>
                             <label for="is_active"  class="form-check-label">Active or Inactive</label>
                             @error('is_active')
                             <span class="invalid-feedback" role="alert">
@@ -41,7 +44,7 @@
                             </span>
                             @enderror
                         </div>
-                        <button type="submit" class="btn btn-primary">Store</button>
+                        <button type="submit" class="btn btn-warning">Update</button>
                     </form>
                 </div>
             </div>
