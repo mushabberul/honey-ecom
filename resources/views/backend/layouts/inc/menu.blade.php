@@ -7,7 +7,7 @@
                 </a>
             </li>
             <li>
-                <a href="#category" data-href="">
+                <a href="#category" data-href="category">
                     <i data-cs-icon="cupcake" class="icon" data-cs-size="18"></i>
                     <span class="label">Category</span>
                 </a>
@@ -25,23 +25,24 @@
                 </ul>
             </li>
             <li>
-                <a href="#category" data-href="category.html">
-                <i data-cs-icon="cupcake" class="icon" data-cs-size="18"></i>
-                <span class="label">category</span>
+                <a href="#testimonial" data-href="testimonial">
+                    <i data-cs-icon="cupcake" class="icon" data-cs-size="18"></i>
+                    <span class="label">Testimonial</span>
                 </a>
-                <ul id="category">
+                <ul id="testimonial">
                 <li>
-                    <a href="category.List.html">
-                    <span class="label">List</span>
+                    <a href="{{route('testimonial.create')}}">
+                        <span class="label">Add New</span>
                     </a>
                 </li>
                 <li>
-                    <a href="category.Detail.html">
-                    <span class="label">Detail</span>
+                    <a href="{{route('testimonial.index')}}">
+                        <span class="label">List</span>
                     </a>
                 </li>
                 </ul>
             </li>
+
             <li>
                 <a href="#orders" data-href="Orders.html">
                 <i data-cs-icon="cart" class="icon" data-cs-size="18"></i>
