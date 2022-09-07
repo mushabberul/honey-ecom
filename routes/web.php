@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\TestimonialController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,5 +31,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'showDashboard'])->name('admin.dashboard');
     });
 
+
     Route::resource('category', CategoryController::class);
+    Route::resource('testimonial', TestimonialController::class);
 });
