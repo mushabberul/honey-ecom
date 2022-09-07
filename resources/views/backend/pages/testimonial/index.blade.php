@@ -41,7 +41,7 @@
                             <td>{{ $testimonial->created_at->format('d-M-Y') }}</td>
                             <td>{{ $testimonial->client_name }}</td>
                             <td>
-                                <img class="rounded-circle" src="{{ asset('uploads/testimonial').'/'. $testimonial->client_image }}" alt="client image">
+                                <img style="width: 120px; height:120px" class="rounded-circle" src="{{ asset('uploads/testimonial').'/'. $testimonial->client_image }}" alt="client image">
                             </td>
                             <td>{{ $testimonial->client_designation }}</td>
                             <td>{{ $testimonial->client_message }}</td>

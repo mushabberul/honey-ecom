@@ -1,7 +1,7 @@
 @extends('backend.layouts.master')
-@section('admin_title','Create Category')
+@section('admin_title','Create Update')
 @push('admin_style')
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
 @endpush
 
 @section('admin_content')
@@ -17,15 +17,26 @@
             <h2>Create Category</h2>
             <div class="card">
                 <div class="card-body">
-                    <form action="{{route('category.update',$category->slug)}}" method="POST">
+                    <form action="{{route('category.update',$category->slug)}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="mb-3">
-                            <label for="title" class="form-label">Update Category</label>
-                            <input type="text" value="{{$category->title}}" class="form-control @error('title')
+                            <label for="category_name" class="form-label">Category Name</label>
+                            <input type="text" value="{{$category->title}}" class="form-control @error('category_name')
                                 is-invalid
-                            @enderror" name="title" id="title">
-                            @error('title')
+                            @enderror" name="category_name" id="category_name">
+                            @error('category_name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{$message}}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="category_image" class="form-label">Category Image</label>
+                            <input type="file" data-default-file="{{asset('uploads/category')}}/{{$category->category_image}}" class="dropify @error('category_image')
+                                is-invalid
+                            @enderror" name="category_image" id="category_image">
+                            @error('category_image')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{$message}}</strong>
                             </span>
@@ -52,5 +63,15 @@
     </div>
 @endsection
 @push('admin_script')
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+<script>
+    $('.dropify').dropify({
+    messages: {
+        'default': 'Drag a file here or click',
+        'replace': 'Drag and drop or click to replace',
+        'remove':  'Remove',
+        'error':   'Ooops, something wrong happended.'
+    }
+});
+</script>
 @endpush

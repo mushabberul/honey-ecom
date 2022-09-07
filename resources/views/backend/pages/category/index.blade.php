@@ -27,7 +27,8 @@
                     <tr>
                         <th>SL</th>
                         <th>Created</th>
-                        <th>Title</th>
+                        <th>Category Name</th>
+                        <th>Category Image</th>
                         <th>Option</th>
                     </tr>
                 </thead>
@@ -37,6 +38,9 @@
                             <td>{{ $categories->firstItem()+$loop->index }}</td>
                             <td>{{ $category->created_at->format('d-M-Y') }}</td>
                             <td>{{ $category->title }}</td>
+                            <td>
+                                <img class="w-20 h-20" src="{{asset('uploads/category')}}/{{$category->category_image}}" alt="">
+                            </td>
                             <td>
                                 <div class="dropdown">
                                     <button class="btn btn-secondary dropdown-toggle" type="button"
