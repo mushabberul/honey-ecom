@@ -3,6 +3,7 @@
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\TestimonialController;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,9 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('frondend.pages.home');
-});
+Route::get('/', [HomeController::class, 'home']);
 
 Route::prefix('admin')->group(function () {
 

@@ -110,8 +110,10 @@ class TestimonialController extends Controller
     {
         $testimonial = Testimonial::where('client_name_slug', $slug)->first();
         if ($testimonial->client_image) {
-            $photo_location = 'uploads/testimonial/' . $testimonial->client_image;
-            unlink($photo_location);
+            if ('default_client.jpg' != $testimonial->client_image) {
+                $photo_location = 'uploads/testimonial/' . $testimonial->client_image;
+                unlink($photo_location);
+            }
         }
         $testimonial->delete();
 

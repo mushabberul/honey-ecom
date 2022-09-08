@@ -111,8 +111,10 @@ class CategoryController extends Controller
         $category = Category::whereSlug($slug)->first();
 
         if ($category->category_image) {
-            $photo_location = 'public/uploads/category/' . $category->category_image;
-            unlink($photo_location);
+            if ('category_default_image.png' != $category->category_image) {
+                $photo_location = 'uploads/category/' . $category->category_image;
+                unlink($photo_location);
+            }
         }
         $category->delete();
         Toastr::success('Category Deleted Successfully');
