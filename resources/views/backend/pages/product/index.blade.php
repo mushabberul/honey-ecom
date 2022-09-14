@@ -31,9 +31,8 @@
                         <th>Name</th>
                         <th>Image</th>
                         <th>Price</th>
-                        <th>Store</th>
+                        <th>Stock/Alert</th>
                         <th>Rating</th>
-                        <th>Quentity Alert</th>
                         <th>Short Description</th>
                         <th>Logn Description</th>
                         <th>Option</th>
@@ -47,12 +46,14 @@
                             <td>{{ $product->category->title }}</td>
                             <td>{{ $product->product_name }}</td>
                             <td>
-                                <img class="w-20 h-20" src="{{$product->product_image}}" alt="">
+                                <img class="w-20 h-20" src="{{asset('uploads/product')}}/{{$product->product_image}}" alt="">
                             </td>
                             <td>{{ $product->product_price }}</td>
-                            <td>{{ $product->product_store }}</td>
+                            <td>
+                                <span class="badge bg-success">{{ $product->product_stock }}</span>/
+                                <span class="badge bg-info">{{$product->alert_quentity}}</span>
+                            </td>
                             <td>{{ $product->product_rating }}</td>
-                            <td>{{ $product->alert_quentity }}</td>
                             <td>{{ $product->product_short_description }}</td>
                             <td>{{ $product->product_long_description }}</td>
                             <td>
@@ -96,7 +97,7 @@
     <script>
         $(document).ready(function() {
             $('#dataTable').DataTable({
-                pagingType: 'first_last_numbers',
+                pagingType: 'numbers',
             });
         });
 

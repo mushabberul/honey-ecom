@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Brian2694\Toastr\Facades\Toastr;
+use Intervention\Image\Facades\Image;
+use App\Http\Requests\ProductStoreRequest;
+use App\Http\Requests\ProductUpdateRequest;
 
 class ProductController extends Controller
 {
@@ -15,15 +21,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //$products = Product::all();
-        //return $products;
-        $products = Product::where('is_active',1)
-        ->with('category')
-        ->latest('id')
-        ->select(['id','product_name','product_slug','product_store','product_rating','alert_quentity','product_image','product_price','created_at','product_short_description','product_long_description'])
-        ->paginate();
-        return $products;
-        return view('backend.pages.product.index',compact('products'));
+        $products = Product::where('is_active', 1)
+            ->with('category')
+            ->latest('id')
+            ->select(['id', 'category_id', 'product_name', 'product_slug', 'product_stock', 'product_rating', 'alert_quentity', 'product_image', 'product_price', 'created_at', 'product_short_description', 'product_long_description'])
+            ->paginate();
+        return view('backend.pages.product.index', compact('products'));
     }
 
     /**
@@ -33,7 +36,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::select(['id', 'title'])->get();
+        return view('backend.pages.product.create', compact('categories'));
     }
 
     /**
@@ -42,9 +46,26 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductStoreRequest $request)
     {
-        //
+        $product = Product::create([
+            'category_id' => $request->category_name,
+            'product_name' => $request->product_name,
+            'product_slug' => Str::slug($request->product_name),
+            'product_price' => $request->product_price,
+            'product_code' => $request->product_code,
+            'product_stock' => $request->product_stock,
+            'alert_quentity' => $request->alert_quentity,
+            'product_short_description' => $request->product_short_description,
+            'product_long_description' => $request->product_long_description,
+            'addissional_info' => $request->addissional_info,
+            'is_active' => $request->filled('is_active'),
+        ]);
+
+        $this->imageUploaded($request, $product->id);
+
+        Toastr::success('Product Added Successfully');
+        return redirect()->route('products.index');
     }
 
     /**
@@ -64,9 +85,12 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        //
+        $categories = Category::select(['id','title'])->get();
+        $product = Product::where('product_slug',$slug)->first();
+        //dd("Product: $product","Category: $categories","Product Category Id: $product->category_id");
+        return view('backend.pages.product.edit',compact('product','categories'));
     }
 
     /**
@@ -76,9 +100,27 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductUpdateRequest $request, $slug)
     {
-        //
+        $product = Product::where('product_slug',$slug)->first();
+        $product->update([
+            'category_id' => $request->category_name,
+            'product_name' => $request->product_name,
+            'product_slug' => Str::slug($request->product_name),
+            'product_price' => $request->product_price,
+            'product_code' => $request->product_code,
+            'product_stock' => $request->product_stock,
+            'alert_quentity' => $request->alert_quentity,
+            'product_short_description' => $request->product_short_description,
+            'product_long_description' => $request->product_long_description,
+            'addissional_info' => $request->addissional_info,
+            'is_active' => $request->filled('is_active'),
+        ]);
+
+        $this->imageUploaded($request,$product->id);
+
+        Toastr::success('Product Updated Successfully');
+        return redirect()->route('products.index');
     }
 
     /**
@@ -87,8 +129,38 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
-        //
+        $product = Product::where('product_slug',$slug)->first();
+
+        if('default_product.png' != $product->product_image){
+            $photo_location = 'public/uploads/product/' . $product->product_image;
+            unlink(base_path($photo_location));
+        }
+        $product->delete();
+
+        Toastr::success('Product Deleted Successfully');
+        return redirect()->route('products.index');
+    }
+
+    public function imageUploaded($request, $item_id)
+    {
+        $product = Product::findOrFail($item_id);
+
+        if ($request->hasFile('product_image')) {
+            if ('default_product.png' != $product->product_image) {
+                $photo_location = 'public/uploads/product/' . $product->product_image;
+                unlink(base_path($photo_location));
+            }
+            $photo_location = 'public/uploads/product/';
+            $uploaded_photo = $request->file('product_image');
+            $new_photo_name = $product->id . '.'. $uploaded_photo->getClientOriginalExtension();
+            $new_photo_location = $photo_location . $new_photo_name;
+            Image::make($uploaded_photo)->resize(600, 600)->save(base_path($new_photo_location));
+
+            $product->update([
+                'product_image' => $new_photo_name,
+            ]);
+        }
     }
 }

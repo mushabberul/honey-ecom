@@ -13,7 +13,7 @@ class ProductUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,16 @@ class ProductUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'category_name'=>'bail|required|numeric',
+            'product_name'=>'bail|required|string|max:255',
+            'product_price'=>'bail|required|numeric|min:0',
+            'alert_quentity'=>'bail|required|min:1',
+            'product_code'=>'bail|required',
+            'product_stock'=>'bail|required|numeric|min:1',
+            'product_short_description'=>'bail|nullable|string',
+            'product_long_description'=>'bail|nullable|string',
+            'addissional_info'=>'bail|nullable|string',
+            'product_image'=>'bail|nullable|image|max:1024',
         ];
     }
 }

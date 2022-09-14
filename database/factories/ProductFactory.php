@@ -27,7 +27,7 @@ class ProductFactory extends Factory
             'product_rating' => $this->faker->numberBetween(1, 5),
             'product_short_description' => $this->faker->paragraph(),
             'product_long_description' => $this->faker->paragraph(),
-            'product_store' => $this->faker->numberBetween(10, 100),
+            'product_stock' => $this->faker->numberBetween(10, 100),
             'product_image' => "default_product.png",
             'product_code' => $this->faker->numberBetween(20, 300),
             'additional_info' => $this->faker->paragraph(),
