@@ -133,6 +133,17 @@
                             @enderror
                         </div>
                         <div class="mb-3">
+                            <label for="multiple_product_image" class="form-label">Multiple Product Image</label>
+                            <input type="file" class="form-control @error('multiple_product_image')
+                                is-invalid
+                            @enderror" name="multiple_product_image[]" multiple id="multiple_product_image">
+                            @error('multiple_product_image')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{$message}}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
                             <input type="checkbox" name="is_active" class="form-check-input @error('is_active')
                                 is-invalid
                             @enderror" role="switch" id="is_active" checked>

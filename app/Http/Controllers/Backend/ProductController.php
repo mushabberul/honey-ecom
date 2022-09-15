@@ -11,6 +11,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use Intervention\Image\Facades\Image;
 use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\ProductUpdateRequest;
+use App\Models\ProductImage;
 
 class ProductController extends Controller
 {
@@ -48,6 +49,7 @@ class ProductController extends Controller
      */
     public function store(ProductStoreRequest $request)
     {
+        //dd($request->all());
         $product = Product::create([
             'category_id' => $request->category_name,
             'product_name' => $request->product_name,
@@ -63,6 +65,8 @@ class ProductController extends Controller
         ]);
 
         $this->imageUploaded($request, $product->id);
+
+        $this->multipleProductImage($request, $product->id);
 
         Toastr::success('Product Added Successfully');
         return redirect()->route('products.index');
@@ -87,10 +91,10 @@ class ProductController extends Controller
      */
     public function edit($slug)
     {
-        $categories = Category::select(['id','title'])->get();
-        $product = Product::where('product_slug',$slug)->first();
+        $categories = Category::select(['id', 'title'])->get();
+        $product = Product::where('product_slug', $slug)->first();
         //dd("Product: $product","Category: $categories","Product Category Id: $product->category_id");
-        return view('backend.pages.product.edit',compact('product','categories'));
+        return view('backend.pages.product.edit', compact('product', 'categories'));
     }
 
     /**
@@ -102,7 +106,7 @@ class ProductController extends Controller
      */
     public function update(ProductUpdateRequest $request, $slug)
     {
-        $product = Product::where('product_slug',$slug)->first();
+        $product = Product::where('product_slug', $slug)->first();
         $product->update([
             'category_id' => $request->category_name,
             'product_name' => $request->product_name,
@@ -117,7 +121,9 @@ class ProductController extends Controller
             'is_active' => $request->filled('is_active'),
         ]);
 
-        $this->imageUploaded($request,$product->id);
+        $this->imageUploaded($request, $product->id);
+
+        $this->multipleProductImage($request,$product->id);
 
         Toastr::success('Product Updated Successfully');
         return redirect()->route('products.index');
@@ -131,9 +137,9 @@ class ProductController extends Controller
      */
     public function destroy($slug)
     {
-        $product = Product::where('product_slug',$slug)->first();
+        $product = Product::where('product_slug', $slug)->first();
 
-        if('default_product.png' != $product->product_image){
+        if ('default_product.png' != $product->product_image) {
             $photo_location = 'public/uploads/product/' . $product->product_image;
             unlink(base_path($photo_location));
         }
@@ -154,13 +160,45 @@ class ProductController extends Controller
             }
             $photo_location = 'public/uploads/product/';
             $uploaded_photo = $request->file('product_image');
-            $new_photo_name = $product->id . '.'. $uploaded_photo->getClientOriginalExtension();
+            $new_photo_name = $product->id . '.' . $uploaded_photo->getClientOriginalExtension();
             $new_photo_location = $photo_location . $new_photo_name;
             Image::make($uploaded_photo)->resize(600, 600)->save(base_path($new_photo_location));
 
             $product->update([
                 'product_image' => $new_photo_name,
             ]);
+        }
+    }
+
+    public function multipleProductImage($request, $product_id)
+    {
+        if ($request->hasFile('multiple_product_image')) {
+
+            $multiple_images = ProductImage::where('product_id', $product_id)->get();
+
+            foreach ($multiple_images as $multiple_image) {
+                if ('default_product.png' != $multiple_image->multiple_product_image) {
+                    //delete images
+                    $photo_location = 'public/uploads/product/' . $multiple_image->multiple_product_image;
+                    unlink(base_path($photo_location));
+                }
+                //delete images name in DB
+                $multiple_image->delete();
+            }
+            $flag = 1;
+            foreach ($request->file('multiple_product_image') as $single_photo) {
+
+                $photo_location = 'public/uploads/product/';
+                $new_photo_name = $product_id . '-' . $flag . '.' . $single_photo->getClientOriginalExtension();
+                $new_photo_location = $photo_location . $new_photo_name;
+
+                Image::make($single_photo)->resize(600, 600)->save(base_path($new_photo_location));
+                ProductImage::create([
+                    'product_id' => $product_id,
+                    'multiple_product_image' => $new_photo_name
+                ]);
+                $flag++;
+            }
         }
     }
 }

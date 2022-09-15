@@ -28,7 +28,7 @@ class ProductStoreRequest extends FormRequest
             'product_name'=>'bail|required|string|max:255',
             'product_price'=>'bail|required|numeric|min:0',
             'alert_quentity'=>'bail|required|min:1',
-            'product_code'=>'bail|required|unique:products,product_code',
+            //'product_code'=>'bail|required|unique:products,product_code',
             'product_stock'=>'bail|required|numeric|min:1',
             'product_short_description'=>'bail|nullable|string',
             'product_long_description'=>'bail|nullable|string',
