@@ -5,12 +5,11 @@
 			<div class="col-12">
 				<div class="featured-active2 owl-carousel next-prev-style">
                     @foreach ($categories as $category)
-
     					<div class="featured-wrap">
                             <div class="featured-img">
                                 <img src="{{ asset('uploads/category/') }}/{{$category->category_image}}" alt="{{$category->title}}">
     							<div class="featured-content">
-                                    <a href="shop.html">{{$category->title}}</a>
+                                    <a href="{{route('shop.page')}}">{{$category->title}}</a>
     							</div>
     						</div>
     					</div>

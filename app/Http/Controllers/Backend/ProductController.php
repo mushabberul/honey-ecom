@@ -123,7 +123,7 @@ class ProductController extends Controller
 
         $this->imageUploaded($request, $product->id);
 
-        $this->multipleProductImage($request,$product->id);
+        $this->multipleProductImage($request, $product->id);
 
         Toastr::success('Product Updated Successfully');
         return redirect()->route('products.index');
@@ -170,7 +170,7 @@ class ProductController extends Controller
         }
     }
 
-    public function multipleProductImage($request, $product_id)
+    public function multipleProductImage(Request $request, $product_id)
     {
         if ($request->hasFile('multiple_product_image')) {
 
@@ -182,6 +182,7 @@ class ProductController extends Controller
                     $photo_location = 'public/uploads/product/' . $multiple_image->multiple_product_image;
                     unlink(base_path($photo_location));
                 }
+
                 //delete images name in DB
                 $multiple_image->delete();
             }
