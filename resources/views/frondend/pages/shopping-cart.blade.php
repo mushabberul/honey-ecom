@@ -32,7 +32,7 @@
                                     </td>
                                     <td class="total">${{$cartitem->subtotal}}</td>
                                     <td class="remove">
-                                        <a href="{{route('removecartitem',['cart_itme_id'=>$cartitem->rowId])}}">
+                                        <a href="{{route('removecartitem',$cartitem->rowId)}}">
                                             <i class="fa fa-times"></i>
                                         </a>
                                     </td>
@@ -44,10 +44,7 @@
                             <div class="col-xl-4 col-lg-5 col-md-6 ">
                                 <div class="cartcupon-wrap">
                                     <ul class="d-flex">
-                                        <li>
-                                            <button>Update Cart</button>
-                                        </li>
-                                        <li><a href="shop.html">Continue Shopping</a></li>
+                                        <li><a href="{{route('shop.page')}}">Continue Shopping</a></li>
                                     </ul>
                                     <h3>Cupon</h3>
                                     <p>Enter Your Cupon Code if You Have One</p>
