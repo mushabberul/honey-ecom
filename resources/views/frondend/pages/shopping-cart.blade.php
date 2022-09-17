@@ -31,7 +31,11 @@
                                         <input type="text" value="{{$cartitem->qty}}" />
                                     </td>
                                     <td class="total">${{$cartitem->subtotal}}</td>
-                                    <td class="remove"><i class="fa fa-times"></i></td>
+                                    <td class="remove">
+                                        <a href="{{route('removecartitem',['cart_itme_id'=>$cartitem->rowId])}}">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>

@@ -25,6 +25,7 @@ Route::prefix('')->group(function(){
     Route::get('/single-product/{product_slug}',[HomeController::class,'productDetails'])->name('productdetails.page');
     Route::get('/shopping-cart',[CartController::class,'cartPage'])->name('cart.page');
     Route::post('add-to-cart',[CartController::class,'addToCart'])->name('add-to.cart');
+    Route::get('/remove-cart-item/{cart_itme_id}',[CartController::class,'removeCartItem'])->name('removecartitem');
 });
 
 Route::prefix('admin')->group(function () {
