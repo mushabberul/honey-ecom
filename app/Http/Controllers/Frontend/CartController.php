@@ -44,7 +44,7 @@ class CartController extends Controller
     }
     public function removeCartItem($cart_item_id)
     {
-        Cart::remove($cart_item_id);
+        $remove = Cart::remove($cart_item_id);
         Toastr::info('Product Removed form Cart');
         return back();
     }

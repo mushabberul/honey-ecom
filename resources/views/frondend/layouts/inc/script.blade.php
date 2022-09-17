@@ -26,6 +26,4 @@
 <script src="{{asset('assets/frontend/')}}/js/scripts.js"></script>
 <!-- Toastr js-->
 <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
-<script>
-    {!! Toastr::message() !!}
-</script>
+{!! Toastr::message() !!}
