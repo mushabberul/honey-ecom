@@ -20,7 +20,7 @@ class LoginController extends Controller
         ];
         if(Auth::attempt($credentials,$request->filled('remember_me'))){
             $request->session()->regenerate();
-            return redirect()->intended('admin/dashboard');
+            return redirect()->route('admin.dashboard');
         }
 
         return back()->withErrors([
