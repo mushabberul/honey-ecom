@@ -40,7 +40,8 @@ Route::prefix('')->group(function(){
         Route::get('dashboard',[CustomarController::class,'dashboard'])->name('customar.dashboard');
         Route::get('logout',[RegisterController::class,'logout'])->name('customar.logout');
 
-        Route::get('cart/apply-coupon',[CartController::class,'applyCoupon'])->name('customar.applycoupon');
+        Route::post('cart/apply-coupon',[CartController::class,'applyCoupon'])->name('customar.applycoupon');
+        Route::get('/cart/remove-coupon/{coupon_name}',[CartController::class,'removeCoupon'])->name('customar.removecoupon');
     });
 
 });

@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use Carbon\Carbon;
+use App\Models\Coupon;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
@@ -16,7 +20,7 @@ class CartController extends Controller
         $total = Cart::total();
         $subtotal = Cart::subtotal();
 
-        return view('frondend.pages.shopping-cart',compact('carts','total','subtotal'));
+        return view('frondend.pages.shopping-cart', compact('carts', 'total', 'subtotal'));
     }
 
     public function addToCart(Request $request)
@@ -25,16 +29,16 @@ class CartController extends Controller
         $product_slug = $request->product_slug;
         $order_qty = $request->order_qty;
 
-         $product = Product::where('product_slug',$product_slug)->first();
+        $product = Product::where('product_slug', $product_slug)->first();
 
         Cart::add([
-            'id'=>$product->id,
-            'name'=>$product->product_name,
-            'price'=>$product->product_price,
-            'qty'=>$order_qty,
-            'weight'=>0,
-            'options'=>[
-                'product_image'=>$product->product_image,
+            'id' => $product->id,
+            'name' => $product->product_name,
+            'price' => $product->product_price,
+            'qty' => $order_qty,
+            'weight' => 0,
+            'options' => [
+                'product_image' => $product->product_image,
             ]
 
         ]);
@@ -51,6 +55,44 @@ class CartController extends Controller
 
     public function applyCoupon(Request $request)
     {
-        dd($request->all());
+        if (!Auth::check()) {
+            Toastr::error('You must need to login first');
+            return redirect()->route('login.page');
+        }
+
+        if(Session::get('coupon')){
+            Toastr::error('Coupon already appied','info!');
+            return back();
+        }
+
+        $coupon_name = $request->coupon_name;
+        $check = Coupon::where('coupon_name', $coupon_name)->first();
+
+        if ($check != null) {
+            $validate = $check->validity_till > Carbon::now()->format('Y-m-d');
+            if ($validate == 1) {
+                Session::put('coupon', [
+                    'name' => $check->coupon_name,
+                    'discount_amount' => round(($check->discount_amount * Cart::totalFloat()) / 100),
+                    'cart_total' => Cart::subtotal(),
+                    'balance' => round(Cart::totalFloat() - (Cart::totalFloat() * $check->discount_amount) / 100)
+                ]);
+
+                Toastr::success('Coupon applied successfully');
+                return back();
+            } else {
+                Toastr::error('Coupon date expaired!');
+                return back();
+            }
+        } else {
+            Toastr::error('Invalid coupon code');
+            return back();
+        }
+    }
+    public function removeCoupon($coupon_name)
+    {
+        Session::forget('coupon');
+        Toastr::info('Coupon removed','Successfully');
+        return back();
     }
 }
