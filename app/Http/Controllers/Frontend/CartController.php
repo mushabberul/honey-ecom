@@ -48,4 +48,9 @@ class CartController extends Controller
         Toastr::info('Product Removed form Cart');
         return back();
     }
+
+    public function applyCoupon(Request $request)
+    {
+        dd($request->all());
+    }
 }

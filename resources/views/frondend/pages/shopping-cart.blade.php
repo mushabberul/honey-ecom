@@ -49,8 +49,11 @@
                                     <h3>Cupon</h3>
                                     <p>Enter Your Cupon Code if You Have One</p>
                                     <div class="cupon-wrap">
-                                        <input type="text" placeholder="Cupon Code">
-                                        <button>Apply Cupon</button>
+                                        <form action="{{route('customar.applycoupon')}}" method="POST">
+                                            @csrf
+                                            <input type="text" name="coupon_name" class="form-contoal">
+                                            <button type="submit" class="btn btn-danger">Button</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

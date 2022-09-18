@@ -5,8 +5,8 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Routing\Route;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Support\Facades\Route;
 
 class isSystemadmin
 {
