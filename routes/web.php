@@ -33,19 +33,19 @@ Route::prefix('')->group(function(){
     Route::get('/register',[RegisterController::class,'registerPage'])->name('register.page');
     Route::post('/register',[RegisterController::class,'registerStore'])->name('register.store');
 
-    Route::get('login',[RegisterController::class,'loginPage'])->name('login.page');
-    Route::post('login',[RegisterController::class,'loginStore'])->name('login.store');
+    Route::get('/login',[RegisterController::class,'loginPage'])->name('login.page');
+    Route::post('/login',[RegisterController::class,'loginStore'])->name('login.store');
 
-    Route::prefix('customar')->middleware('auth')->group(function(){
-        Route::get('/dashboard',[CustomarController::class,'dashboard'])->name('customar.dashboard');
-        Route::get('/logout',[RegisterController::class,'logout'])->name('logout.page');
+    Route::prefix('customar/')->middleware('auth')->group(function(){
+        Route::get('dashboard',[CustomarController::class,'dashboard'])->name('customar.dashboard');
+        Route::get('logout',[RegisterController::class,'logout'])->name('customar.logout');
     });
 
 });
 
-Route::prefix('admin')->group(function () {
+Route::prefix('admin/')->group(function () {
 
-    Route::get('login', [LoginController::class, 'loginPage'])->name('admin.login');
+    Route::get('login', [LoginController::class, 'loginPage'])->name('admin.loginpage');
     Route::post('login', [LoginController::class, 'login'])->name('admin.login');
     Route::get('logout', [LoginController::class, 'logout'])->name('admin.logout');
 
