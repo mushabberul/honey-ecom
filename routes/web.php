@@ -5,7 +5,9 @@ use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\TestimonialController;
+use App\Http\Controllers\Frontend\Auth\RegisterController;
 use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\CustomarController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
@@ -27,11 +29,23 @@ Route::prefix('')->group(function(){
     Route::get('/shopping-cart',[CartController::class,'cartPage'])->name('cart.page');
     Route::post('add-to-cart',[CartController::class,'addToCart'])->name('add-to.cart');
     Route::get('/remove-cart-item/{cart_itme_id}',[CartController::class,'removeCartItem'])->name('removecartitem');
+
+    Route::get('/register',[RegisterController::class,'registerPage'])->name('register.page');
+    Route::post('/register',[RegisterController::class,'registerStore'])->name('register.store');
+
+    Route::get('login',[RegisterController::class,'loginPage'])->name('login.page');
+    Route::post('login',[RegisterController::class,'loginStore'])->name('login.store');
+
+    Route::prefix('customar')->middleware('auth')->group(function(){
+        Route::get('/dashboard',[CustomarController::class,'dashboard'])->name('customar.dashboard');
+        Route::get('/logout',[RegisterController::class,'logout'])->name('logout.page');
+    });
+
 });
 
 Route::prefix('admin')->group(function () {
 
-    Route::get('login', [LoginController::class, 'loginPage']);
+    Route::get('login', [LoginController::class, 'loginPage'])->name('admin.login');
     Route::post('login', [LoginController::class, 'login'])->name('admin.login');
     Route::get('logout', [LoginController::class, 'logout'])->name('admin.logout');
 
