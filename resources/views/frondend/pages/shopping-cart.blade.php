@@ -79,7 +79,7 @@
                                             <li><span class="pull-left"> Total </span> ${{$total}}</li>
                                         @endif
                                     </ul>
-                                    <a href="checkout.html">Proceed to Checkout</a>
+                                    <a href="{{route('customar.checkoutpage')}}">Proceed to Checkout</a>
                                 </div>
                             </div>
                         </div>
