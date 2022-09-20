@@ -20,14 +20,23 @@
                                 <div class="col-sm-12 col-12">
                                     <p>Full Name *</p>
                                     <input type="text" name="fullname">
+                                    @error('fullname')
+                                        <div class="text-danger">{{$message}}</div>
+                                    @enderror
                                 </div>
                                 <div class="col-sm-12 col-12">
                                     <p>Email Address *</p>
                                     <input type="email" name="email">
+                                    @error('email')
+                                        <div class="text-danger">{{$message}}</div>
+                                    @enderror
                                 </div>
                                 <div class="col-sm-12 col-12">
                                     <p>Phone No. *</p>
                                     <input type="text" name="phone">
+                                    @error('phone')
+                                        <div class="text-danger">{{$message}}</div>
+                                    @enderror
                                 </div>
                                 <div class="col-sm-12 col-12 mb-3">
                                     <p>Selete a District *</p>
@@ -37,20 +46,32 @@
                                             <option value="{{$district->id}}">{{$district->name}}</option>
                                         @endforeach
                                     </select>
+                                    @error('district_id')
+                                        <div class="text-danger">{{$message}}</div>
+                                    @enderror
                                 </div>
                                 <div class="col-sm-12 col-12 mb-3">
                                     <p>Selete a Upazila*</p>
                                     <select name="upazila_id" id="upazila_id" class="form-control js-example-basic-single">
                                         <option value="" disabled selected>Seletct a Upazila</option>
                                     </select>
+                                    @error('upazila_id')
+                                        <div class="text-danger">{{$message}}</div>
+                                    @enderror
                                 </div>
                                 <div class="col-12">
                                     <p>Your Address *</p>
-                                    <input type="text">
+                                    <input type="text" name="address">
+                                    @error('address')
+                                        <div class="text-danger">{{$message}}</div>
+                                    @enderror
                                 </div>
                                 <div class="col-12">
                                     <p>Order Notes </p>
-                                    <textarea name="massage" placeholder="Notes about Your Order, e.g.Special Note for Delivery"></textarea>
+                                    <textarea name="note" placeholder="Notes about Your Order, e.g.Special Note for Delivery"></textarea>
+                                    @error('note')
+                                        <div class="text-danger">{{$message}}</div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>

@@ -52,4 +52,14 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
         ]);
     }
+    public function customar()
+    {
+        return $this->state(fn(array $attributes) => [
+            'name' => 'customar',
+            'email' => 'customar@gmail.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make(1234), // password
+            'remember_token' => Str::random(10),
+        ]);
+    }
 }

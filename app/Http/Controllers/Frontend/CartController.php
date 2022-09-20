@@ -74,7 +74,7 @@ class CartController extends Controller
                 Session::put('coupon', [
                     'name' => $check->coupon_name,
                     'discount_amount' => round(($check->discount_amount * Cart::totalFloat()) / 100),
-                    'cart_total' => Cart::subtotal(),
+                    'cart_total' => Cart::subtotalFloat(),
                     'balance' => round(Cart::totalFloat() - (Cart::totalFloat() * $check->discount_amount) / 100)
                 ]);
 
