@@ -12,9 +12,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Http\Requests\BillingStoreRequest;
+use App\Mail\PurchaseConfirm;
 use App\Models\OrderDetails;
 use App\Models\Product;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Mail;
 
 class CheckoutController extends Controller
 {
@@ -71,6 +73,11 @@ class CheckoutController extends Controller
         }
         Cart::destroy();
         Session::forget('coupon');
+
+        $order = Order::whereId($order->id)->with(['billing','orderdetails'])->get();
+        //dd($order);
+        Mail::to($request->email)->send(new PurchaseConfirm($order));
+
         Toastr::success('Shopping completed,See you again','Successfully');
 
         return redirect()->route('cart.page');

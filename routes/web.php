@@ -11,6 +11,7 @@ use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\CustomarController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 
 /*
