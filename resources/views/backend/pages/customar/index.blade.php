@@ -53,7 +53,7 @@
 <script>
     $(document).ready(function () {
     $('#dataTable').DataTable({
-        pagingType: 'first_last_numbers',
+        pagingType: 'numbers',
     });
     $('.show_confirm').click(function(event){
         let form = $(this).closest('form');
