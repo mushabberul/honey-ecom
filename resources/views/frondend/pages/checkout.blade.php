@@ -81,16 +81,16 @@
                             <h3>Your Order</h3>
                             <ul class="total-cost">
                                 @foreach ($carts as $item)
-                                    <li>{{ $item->name }} X {{ $item->qty }} <span class="pull-right">৳ {{ $item->price*$item->qty }}</span></li>
+                                    <li>{{ $item->name }} X {{ $item->qty }} <span class="pull-right">$ {{ $item->price*$item->qty }}</span></li>
                                 @endforeach
 
                                 @if (Session::has('coupon'))
 
-                                    <li>Discount <span class="pull-right"><strong> (-) ৳ {{ Session::get('coupon')['discount_amount'] }}</strong></span></li>
-                                    <li>Total<span class="pull-right">৳ {{ Session::get('coupon')['balance'] }} <del class="text-danger">৳ {{ Session::get('coupon')['cart_total'] }}</del></span></li>
+                                    <li>Discount <span class="pull-right"><strong> (-) $ {{ Session::get('coupon')['discount_amount'] }}</strong></span></li>
+                                    <li>Total<span class="pull-right">$ {{ Session::get('coupon')['balance'] }} <del class="text-danger">$ {{ Session::get('coupon')['cart_total'] }}</del></span></li>
                                     @else
-                                        <li>Total<span class="pull-right">৳ {{ $total }}</span></li>
-                                        <li>Subtotal <span class="pull-right"><strong>৳ {{ $total }}</strong></span></li>
+                                        <li>Total<span class="pull-right">$ {{ $total }}</span></li>
+                                        <li>Subtotal <span class="pull-right"><strong>$ {{ $total }}</strong></span></li>
 
                                 @endif
                             </ul>
