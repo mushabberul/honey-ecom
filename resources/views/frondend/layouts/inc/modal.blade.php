@@ -1,3 +1,4 @@
+
 <!-- Modal area start -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
@@ -7,10 +8,10 @@
             </button>
             <div class="modal-body d-flex">
                 <div class="product-single-img w-50">
-                    <img src="{{asset('assets/frontend/')}}/images/product/product-details.jpg" alt="">
+                    <img src="{{asset('uploads/product')}}/{{$bestSellingProduct->product_image}}" alt="">
                 </div>
                 <div class="product-single-content w-50">
-                    <h3>Pure Nature Hohey</h3>
+                    <h3>{{$bestSellingProduct->product_name}}</h3>
                     <div class="rating-wrap fix">
                         <span class="pull-left">$219.56</span>
                         <ul class="rating pull-right">

@@ -22,7 +22,7 @@
 
         @include('frondend.layouts.inc.newsletter')
         @include('frondend.layouts.inc.footer')
-        @include('frondend.layouts.inc.modal')
+        {{--@include('frondend.layouts.inc.modal')--}}
         @include('frondend.layouts.inc.script')
     </body>
 </html>
